@@ -7,60 +7,34 @@ class Newgame {
     }
 }
 
-const container = document.querySelector('.todosCards');
+const formulario = document.getElementById('formjogo');
 
+if (formulario) {
+    formulario.addEventListener('submit', function (evento) {
+        evento.preventDefault(); // Impede o recarregamento padrão da página
 
-/*
-fetch('/api/lista')
-  .then((resposta) => resposta.json())
-  .then((dados) => {
-    container.innerHTML = ''; // Limpa o container antes de renderizar
+        // Captura os valores digitados nos inputs (ids iguais aos do form.html)
+        const titulo = document.getElementById('nome').value;
+        const imagem = document.getElementById('imagem').value;
+        const sinopse = document.getElementById('sinopse').value;
+        const valor = Number(document.getElementById('preco').value);
 
-    dados.forEach(obra => {
-      container.innerHTML += `
-        <div class = "card">
-          <div class = "texto">
-            <h3 id="titulo">${obra.titulo}</h3>
-            <p>${obra.descricao}</p>
-          </div>
-          <div class = "img">
-            <img src="${obra.imagem}" alt="${obra.descImagem}">
-          </div>
-        </div>
-      `;
+        // Ordem do construtor: titulo, sinopse, imagem, valor
+        const novoJogo = new Newgame(titulo, sinopse, imagem, valor);
+
+        // Envia o jogo para a API
+        fetch('/api/lista', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(novoJogo)
+        })
+            .then(resposta => resposta.json())
+            .then(() => {
+                formulario.reset();
+                carregarJogos(); // Atualiza o catálogo embaixo do formulário
+            })
+            .catch(erro => console.error("Erro ao enviar:", erro));
     });
-  })
-  .catch((erro) => console.error("Erro ao buscar as obras:", erro));
-*/
-
-
-const formulario = document.getElementById('formulario');
-
-formulario.addEventListener('submit', function(evento) {
-    evento.preventDefault(); // Impede o recarregamento padrão da página
-
-    // Captura os valores digitados nos inputs
-    const tituloF = document.getElementById('titulo').value;
-    const imagemF = document.getElementById('imagem').value;
-    const descricaoImF = document.getElementById('descricao').value;
-    const textoF = document.getElementById('paragrafo').value;
-
-    // Instancia o objeto (atenção à ordem: titulo, descricao, imagem, descImagem)
-    const novaObra = new ObraDeArte(tituloF, textoF, imagemF, descricaoImF);
-
-    // Dispara a requisição POST para a API
-    fetch('/api/lista', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(novaObra)
-    })
-    .then(resposta => resposta.json())
-    .then(() => {
-        alert('Obra enviada com sucesso!');
-        formulario.reset();
-        window.location.href = 'index.html'; // Redireciona para ver o card na galeria
-    })
-    .catch(erro => console.error("Erro ao enviar:", erro));
-});
+}
