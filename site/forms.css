@@ -2,10 +2,6 @@ body {
     font-family: Arial;
 }
 
-.formulario {
-    width: 250px;
-    margin: 50px auto;
-}
 
 input, textarea {
     width: 100%;
@@ -14,4 +10,37 @@ input, textarea {
 
 button {
     width: 100%;
+}
+#formulario {
+    width: 250px;
+    margin: 50px auto;
+}
+
+#colecao {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.card {
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.card .texto {
+    padding: 8px;
+}
+
+.preco {
+    font-weight: bold;
 }

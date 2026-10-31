@@ -10,16 +10,10 @@ app.use(express.static('site'));
 // Banco de dados temporário em memória RAM
 let lista = [
     {
-        titulo: "obra de arte 1",
-        descricao: "ficticio",
-        imagem: "https://via.placeholder.com/150",
-        descImagem: "Imagem ficticia 1"
-    },
-    {
-        titulo: "obra de arte 2",
-        descricao: "ficticio2",
-        imagem: "https://via.placeholder.com/150",
-        descImagem: "Imagem ficticia 2"
+        titulo: "Resident Evil Requiem",
+        sinopse: "Survival horror tenso com exploração e ação estratégica.",
+        imagem: "https://uploads.jovemnerd.com.br/wp-content/uploads/2025/06/resident_evil_9__x1mk6q.jpg",
+        valor: 299
     }
 ];
 
@@ -28,10 +22,10 @@ app.get('/api/lista', (req, res) => {
     res.json(lista);
 });
 
-// Rota POST: Recebe uma nova obra do formulário e guarda no Array
+// Rota POST: Recebe um novo jogo do formulário e guarda no Array
 app.post('/api/lista', (req, res) => {
-    const novaObra = req.body;
-    lista.push(novaObra);
+    const novoJogo = req.body;
+    lista.push(novoJogo);
     res.json({ status: "sucesso" });
 });
 
